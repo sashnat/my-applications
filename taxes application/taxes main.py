@@ -29,7 +29,7 @@ df = pd.DataFrame({'input number': [i for i in range(1, len(input_number) + 1)],
                    'left, $': left,
                    'tax': [z for i in range(1, len(input_number) + 1)]
                   })
-df.to_excel('C:\\Users\\user\PycharmProjects\\applications\\taxes application\\taxes.xlsx')   # file contains rest of excel files
+df.to_excel('C:\\Users\\user\PycharmProjects\\applications\\taxes application\\taxes.xlsx')
 print(df)
 
 '''

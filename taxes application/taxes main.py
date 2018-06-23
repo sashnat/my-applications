@@ -8,7 +8,6 @@ def compare(income):
     j = income(float(i))
     print ('left, $:', j)
     got.append(i)
-    input_number.append("i")
     left.append(int(j))
     answer = input('want another entry: (y/n) ?').lower()
     if answer == 'y':
@@ -21,13 +20,12 @@ if __name__ == '__main__':
     from taxes import income, z
 import pandas as pd
 got = []
-input_number = []
 left = []
 compare(income)
-df = pd.DataFrame({'input number': [i for i in range(1, len(input_number) + 1)],
+df = pd.DataFrame({'input number': [i for i in range(1, len(got) + 1)],
                    'local currency got': got,
                    'left, $': left,
-                   'tax': [z for i in range(1, len(input_number) + 1)]
+                   'tax': [z for i in range(1, len(got) + 1)]
                   })
 df.to_excel('C:\\Users\\user\PycharmProjects\\applications\\taxes application\\taxes.xlsx')
 print(df)

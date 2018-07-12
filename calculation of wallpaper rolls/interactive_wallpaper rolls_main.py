@@ -12,10 +12,10 @@ def s():
     z = math.ceil(math.ceil(b/y)/math.floor(x/a))
     print ("количество рулонов: ", z , "; количество полос: ", z*math.floor(x/a))
     p = z*math.floor(x/a)-math.ceil(b/y)
-    print ("в резерве полос: ", p)
+    print ("в резерве - полос: ", p, " в резерве - метров: ", x*z - a*z*(math.floor(x/a)))
     q.append(z)
-    spare.append(x - (z*math.floor(x/a)*a))
-    print(z, "рулонов для", i, "-го участка")
+    spare.append(x*z - a*z*(math.floor(x/a)))
+    print(z, "рулон(а)(ов) для", i, "-го участка")
     answer = input('want another entry: (y/n) ?').lower()
     if answer == 'y':
         return s()

@@ -2,36 +2,39 @@
 # Расчет рулонов обоев
 
 
-def s():
+def calc():
     global i
     i += 1
-    a = float(input('высота участка: '))
-    b = float(input('ширина участка: '))
-    print ("всего нужно полос: ", math.ceil(b/y))
-    print ("целых кусков (полос) для одного рулона: ", math.floor(x/a))
-    z = math.ceil(math.ceil(b/y)/math.floor(x/a))
-    print ("количество рулонов: ", z , "; количество полос: ", z*math.floor(x/a))
-    p = z*math.floor(x/a)-math.ceil(b/y)
-    print ("в резерве - полос: ", p, " в резерве - метров: ", x*z - a*z*(math.floor(x/a)))
-    q.append(z)
-    spare.append(x*z - a*z*(math.floor(x/a)))
-    print(z, "рулон(а)(ов) для", i, "-го участка")
+    h_area = float(input('высота участка: '))
+    w_area = float(input('ширина участка: '))
+    roll_num = math.ceil(math.ceil(w_area/w_roll)/math.floor(h_roll/h_area)) # количество рулонов
+    spare_num = roll_num*math.floor(h_roll/h_area)-math.ceil(w_area/w_roll)  # в резерве - полос для данного участка
+
+    print ("всего нужно полос: ", math.ceil(w_area/w_roll))
+    print ("целых кусков (полос) для одного рулона: ", math.floor(h_roll/h_area))
+    print ("количество рулонов: ", roll_num , "; количество полос: ", roll_num*math.floor(h_roll/h_area))
+    print ("в резерве - полос: ", spare_num, " в резерве - метров: ", h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area)))
+    print(roll_num, "рулон(а)(ов) для", i, "-го участка")
+
+    sum_roll_num.append(roll_num)
+    sum_spare.append(h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area)))
+
     answer = input('want another entry: (y/n) ?').lower()
     if answer == 'y':
-        return s()
+        return calc()
     else:
         print('get result')
-    return z
+    return roll_num
 
 
 if __name__ == '__main__':
     from wallpaper_rolls import *
 
 
-q = []
-spare = []
+sum_roll_num = []
+sum_spare = []
 i = 0
-s()
+calc()
 
-print("всего рулонов, шт.: ", reduce((lambda x, y: x + y), q))
-print("всего резерв, м: ", reduce((lambda x, y: x + y), spare))
+print("всего рулонов, шт.: ", reduce((lambda x, y: x + y), sum_roll_num))
+print("всего резерв, м: ", reduce((lambda x, y: x + y), sum_spare))

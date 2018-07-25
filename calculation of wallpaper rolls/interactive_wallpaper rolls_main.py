@@ -7,20 +7,21 @@ def calc():
     i += 1
     h_area = float(input('высота участка/ area height: '))
     w_area = float(input('ширина участка/ area width: '))
+    pcs_num = math.floor(h_roll/h_area)  # целых кусков (полос) для одного рулона/ pieces q-ty for a roll
     roll_num = math.ceil(math.ceil(w_area/w_roll)/math.floor(h_roll/h_area)) # количество рулонов
-    spare_num = roll_num*math.floor(h_roll/h_area)-math.ceil(w_area/w_roll)  # в резерве - полос для данного участка
-    spare_metr = h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area ))
-
+    spare_pcs_num = roll_num*math.floor(h_roll/h_area)-math.ceil(w_area/w_roll)  # в резерве - полос для данного участка
+    spare_metr = h_roll - h_area*(math.floor(h_roll/h_area ))
+    spare_metr_sum = h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area ))
+    '''
     print ("всего нужно полос/ pieces req.: ", math.ceil(w_area/w_roll))
-    print ("целых кусков (полос) для одного рулона/ pieces q-ty for a roll: ", math.floor(h_roll/h_area))
-    print ("количество рулонов/ rolls q-ty: ", roll_num , "; количество полос/ pieces q-ty: ", roll_num*math.floor(h_roll/h_area))
-    print ("в резерве полос/ spare pieces: ", spare_num, " в резерве метров/ spare metres: ", spare_metr)
+    print ("целых кусков (полос) для одного рулона/ pieces q-ty for a roll: ", pcs_num)
+    print ("количество рулонов/ rolls q-ty: ", roll_num , " = количество полос/ pieces q-ty: ", roll_num*math.floor(h_roll/h_area))
+    print ("в резерве полос/ spare pieces: ", spare_pcs_num, " в резерве метров/ spare metres: ", spare_metr_sum)
     print(roll_num, "рулон(а)(ов) для/ in sum rolls for", i, "-го участка/ -(st)(d)(th)area")
-
+    '''
     sum_roll_num.append(roll_num)
-    sum_spare.append(h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area)))
-    d[i] = {"h_area": h_area, "spare_num": spare_num, "spare_metr": spare_metr}
-
+    sum_spare.append(spare_metr_sum)
+    d[i] = {"roll_num": roll_num, "h_area": h_area, "pcs_num": pcs_num, "spare_pcs_num": spare_pcs_num, "spare_metr": spare_metr, "spare_metr_sum": spare_metr_sum}
     answer = input('want another entry: (y/n) ?').lower()
     if answer == 'y':
         return calc()
@@ -38,13 +39,27 @@ sum_spare = []
 i = 0
 calc()
 
-
 print("всего рулонов, шт./ rolls in sum req :", reduce((lambda x, y: x + y), sum_roll_num))
 print("всего резерв, м / spare in sum:", reduce((lambda x, y: x + y), sum_spare))
-#print(d)
-df = pd.DataFrame({'h_area': [d[key]['h_area'] for key in d],
-                   'spare_num': [d[key]['spare_num'] for key in d],
-                   'spare_metr': [d[key]['spare_metr'] for key in d]
+
+df = pd.DataFrame({'area number': [key for key in d],
+                   'h_area': [d[key]['h_area'] for key in d],
+                   'roll_num': [d[key]['roll_num'] for key in d],
+                   'pcs_num': [d[key]['pcs_num'] for key in d],
+                   'spare_pcs_num': [d[key]['spare_pcs_num'] for key in d],
+                   'spare_metr': [d[key]['spare_metr'] for key in d],
+                   'spare_metr_sum': [d[key]['spare_metr_sum'] for key in d]
                   })
+
+
+def df_x():
+    global x
+    q = df.loc[x, 'h_area']
+    df['spare can be used for ' + str(x + 1) + ' area'] = ["yes" if q <= df.loc[i, 'spare_metr'] and df.loc[x, 'roll_num'] <= df.loc[i, 'roll_num'] else 'N/A' for i in range(len(df.index))]
+    return df['spare can be used for ' + str(x + 1) + ' area']
+
+
+for x in range(len(df.index)):
+    print(df_x())
+
 df.to_excel('C:\\Users\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\calc.xlsx')   # file contains rest of excel files
-print(df)

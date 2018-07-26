@@ -7,11 +7,11 @@ def calc():
     i += 1
     h_area = float(input('высота участка/ area height: '))
     w_area = float(input('ширина участка/ area width: '))
-    pcs_num = math.floor(h_roll/h_area)  # целых кусков (полос) для одного рулона/ pieces q-ty for a roll
-    roll_num = math.ceil(math.ceil(w_area/w_roll)/math.floor(h_roll/h_area)) # количество рулонов
-    spare_pcs_num = roll_num*math.floor(h_roll/h_area)-math.ceil(w_area/w_roll)  # в резерве - полос для данного участка
-    spare_metr = h_roll - h_area*(math.floor(h_roll/h_area ))
-    spare_metr_sum = h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area ))
+    pcs_num = math.floor(h_roll/h_area)                                             # целых кусков (полос) для одного рулона/ pieces q-ty for a roll
+    roll_num = math.ceil(math.ceil(w_area/w_roll)/math.floor(h_roll/h_area))        # количество рулонов/ rolls q-ty
+    spare_pcs_num = roll_num*math.floor(h_roll/h_area)-math.ceil(w_area/w_roll)     # в резерве полос для участка/ spare pieces for the area
+    spare_metr = h_roll - h_area*(math.floor(h_roll/h_area ))                       # в резерве (метров) для одного рулона/ spare (metres/ inches) for one roll
+    spare_metr_sum = h_roll*roll_num - h_area*roll_num*(math.floor(h_roll/h_area )) # в резерве (метров) для всех рулонов/ spare (metres/ inches) for roll for the area
     '''
     print ("всего нужно полос/ pieces req.: ", math.ceil(w_area/w_roll))
     print ("целых кусков (полос) для одного рулона/ pieces q-ty for a roll: ", pcs_num)
@@ -51,7 +51,7 @@ df = pd.DataFrame({'area number': [key for key in d],
                    'spare_metr_sum': [d[key]['spare_metr_sum'] for key in d]
                   })
 
-
+# to find out if there is a spare in an area that can be used for another area. If it's so, it prints "yes"
 def df_x():
     global x
     q = df.loc[x, 'h_area']
@@ -60,6 +60,7 @@ def df_x():
 
 
 for x in range(len(df.index)):
-    print(df_x())
+    df_x()
 
+print(df)
 df.to_excel('C:\\Users\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\calc.xlsx')   # file contains rest of excel files

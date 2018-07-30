@@ -62,5 +62,9 @@ def df_x():
 for x in range(len(df.index)):
     df_x()
 
-print(df)
-df.to_excel('C:\\Users\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\calc.xlsx')   # file contains rest of excel files
+
+df.index = (str(i) + '- area' for i in range(1, len(df.index) + 1))
+stacked = df.stack()
+
+df.to_excel('C:\\Users\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\calc.xlsx')
+stacked.to_excel('C:\\Users\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\stacked.xlsx')

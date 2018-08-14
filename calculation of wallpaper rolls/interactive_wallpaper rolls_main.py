@@ -65,6 +65,56 @@ for x in range(len(df.index)):
 
 df.index = (str(i) + '- area' for i in range(1, len(df.index) + 1))
 stacked = df.stack()
+print(stacked)
 
 df.to_excel('C:\\Users\PycharmProjects\june 2018\\calculation of wallpaper rolls\\calc.xlsx')
-stacked.to_excel('C:\\E277460\PycharmProjects\june 2018\\calculation of wallpaper rolls\\stacked.xlsx')
+stacked.to_excel('C:\\Users\PycharmProjects\june 2018\\calculation of wallpaper rolls\\stacked.xlsx')
+
+#---------------------Output---------------- :
+'''
+высота (длина) рулона/ roll  height: 10
+ширина рулона/ roll width: .5
+высота участка/ area height: 2.75
+ширина участка/ area width: 4
+want another entry: (y/n) ?y
+высота участка/ area height: 1.2
+ширина участка/ area width: 4
+want another entry: (y/n) ?y
+высота участка/ area height: 1
+ширина участка/ area width: 4
+want another entry: (y/n) ?n
+get result
+всего рулонов, шт./ rolls in sum req : 5
+всего резерв, м / spare in sum: 5.65
+1- area  area number                        1
+         h_area                          2.75
+         roll_num                           3
+         pcs_num                            3
+         spare_pcs_num                      1
+         spare_metr                      1.75
+         spare_metr_sum                  5.25
+         spare can be used for 1 area     N/A
+         spare can be used for 2 area     yes
+         spare can be used for 3 area     yes
+2- area  area number                        2
+         h_area                           1.2
+         roll_num                           1
+         pcs_num                            8
+         spare_pcs_num                      0
+         spare_metr                       0.4
+         spare_metr_sum                   0.4
+         spare can be used for 1 area     N/A
+         spare can be used for 2 area     N/A
+         spare can be used for 3 area     N/A
+3- area  area number                        3
+         h_area                             1
+         roll_num                           1
+         pcs_num                           10
+         spare_pcs_num                      2
+         spare_metr                         0
+         spare_metr_sum                     0
+         spare can be used for 1 area     N/A
+         spare can be used for 2 area     N/A
+         spare can be used for 3 area     N/A
+dtype: object1
+'''
